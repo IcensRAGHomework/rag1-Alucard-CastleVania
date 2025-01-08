@@ -27,18 +27,16 @@ gpt_config = get_model_configuration(gpt_chat_version)
 #        )
 
 #print(few_shot_prompt.invoke({}).to_messages())
+base_model = AzureChatOpenAI(
+        model=gpt_config['model_name'],
+        deployment_name=gpt_config['deployment_name'],
+        openai_api_key=gpt_config['api_key'],
+        openai_api_version=gpt_config['api_version'],
+        azure_endpoint=gpt_config['api_base'],
+        temperature=gpt_config['temperature']
+)
 
 def generate_hw01(question):
-    print("+++++++++++++")
-    print("Greeting from gen1")
-    llm = AzureChatOpenAI(
-            model=gpt_config['model_name'],
-            deployment_name=gpt_config['deployment_name'],
-            openai_api_key=gpt_config['api_key'],
-            openai_api_version=gpt_config['api_version'],
-            azure_endpoint=gpt_config['api_base'],
-            temperature=gpt_config['temperature']
-    )
     holiday_schema1 = {
             "title": "holiday",
             "description": "Give me some memorial day in taiwan",
@@ -62,12 +60,8 @@ def generate_hw01(question):
                 },
             "required" : ["result"]
             }
-    formated_llm = llm.with_structured_output(holiday_schema1)
+    formated_llm = base_model.with_structured_output(holiday_schema1)
     res = formated_llm.invoke(question)
-    print(res)
-    file_name = "output.json"
-    with open(file_name, 'w', encoding = 'utf-8') as jfile:
-        json.dump(res, jfile, ensure_ascii=False, indent = 4)
 
     
 def generate_hw02(question):
