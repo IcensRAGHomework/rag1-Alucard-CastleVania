@@ -42,7 +42,7 @@ def generate_hw01(question):
             "description": "Give me some memorial day in taiwan",
             "type":"object",
             "properties": {
-                "result":{
+                "Result":{
                     "type" : "object",
                     "description" : "Query result of question",
                     "properties": {
@@ -58,13 +58,13 @@ def generate_hw01(question):
                     "requires": ["date", "name"]
                     }
                 },
-            "required" : ["result"]
+            "required" : ["Result"]
             }
     formated_llm = base_model.with_structured_output(holiday_schema1)
     res = formated_llm.invoke(question)
     res = str(res)
     res = res.replace("'", '"')
-    print(res)
+    #print(res)
     return res
 
     
