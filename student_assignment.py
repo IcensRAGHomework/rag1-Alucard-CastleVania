@@ -62,14 +62,18 @@ def generate_hw01(question):
             }
     formated_llm = base_model.with_structured_output(holiday_schema1)
     res = formated_llm.invoke(question)
+    res = {
+            "Result" : res
+            }
     res = str(res)
     res = res.replace("'", '"')
-    #print(res)
+    print(res)
     return res
 
     
 def generate_hw02(question):
     pass
+    
     
 def generate_hw03(question2, question3):
     pass
